@@ -14,16 +14,16 @@
 
 # Define variables 
 BAM_FILES=(
-/global/scratch/users/elinorvelasquez/mouse_data/star_results/renamed/base_rep1.bam
-/global/scratch/users/elinorvelasquez/mouse_data/star_results/renamed/base_rep2.bam
-/global/scratch/users/elinorvelasquez/mouse_data/star_results/renamed/base_rep3.bam
-/global/scratch/users/elinorvelasquez/mouse_data/star_results/renamed/base_rep4.bam
-/global/scratch/users/elinorvelasquez/mouse_data/star_results/renamed/base_rep5.bam
-/global/scratch/users/elinorvelasquez/mouse_data/star_results/renamed/drug_rep1.bam
-/global/scratch/users/elinorvelasquez/mouse_data/star_results/renamed/drug_rep2.bam
-/global/scratch/users/elinorvelasquez/mouse_data/star_results/renamed/drug_rep3.bam
-/global/scratch/users/elinorvelasquez/mouse_data/star_results/renamed/drug_rep4.bam
-/global/scratch/users/elinorvelasquez/mouse_data/star_results/renamed/drug_rep5.bam
+/global/scratch/users/your-username/mouse_data/star_results/renamed/base_rep1.bam
+/global/scratch/users/your-username/mouse_data/star_results/renamed/base_rep2.bam
+/global/scratch/users/your-username/mouse_data/star_results/renamed/base_rep3.bam
+/global/scratch/users/your-username/mouse_data/star_results/renamed/base_rep4.bam
+/global/scratch/users/your-username/mouse_data/star_results/renamed/base_rep5.bam
+/global/scratch/users/your-username/mouse_data/star_results/renamed/drug_rep1.bam
+/global/scratch/users/your-username/mouse_data/star_results/renamed/drug_rep2.bam
+/global/scratch/users/your-username/mouse_data/star_results/renamed/drug_rep3.bam
+/global/scratch/users/your-username/mouse_data/star_results/renamed/drug_rep4.bam
+/global/scratch/users/your-username/mouse_data/star_results/renamed/drug_rep5.bam
 )
 GTF_FILE=genome/annotation.gtf
 OUTPUT_FILE=mouse_data/fcounts_results/gene_counts.txt
