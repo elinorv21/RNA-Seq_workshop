@@ -23,4 +23,4 @@ This R file produces a variety of plots helpful for analyzing differentially exp
 ### mouse_cluster.R:
 This R file produces a variety of plots helpful for performing functional analysis, using the clusterProfiler R package.
 ### mouse_rmats.R:
-This R file produces a variety of plots for analyzing alternative splicing events.
+This R file produces a variety of plots helpful for analyzing alternative splicing events.
