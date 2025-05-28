@@ -3,7 +3,7 @@
 ### mouse_star.sh: 
 This slurm file runs the STAR algorithm on a single fastq file (Trimmomatic output) to align reads to a reference genome. Output is a bam file. Bai files need to be produced separately. The genome index (index_star) needs to be produced separately. The reference genome (genome.fa) and annotation file (annotation.gtf) need to be downloaded.
 ### mouse_rmats.sh:
-This slurm file runs the rMATS algorithm on bam files to produce text files representing a variety of alternative splicing events.
+This slurm file runs the rMATS algorithm on bam files to produce text files representing a variety of alternative splicing events. The tmp file needs to be emptied for each run.
 ### mouse_fcounts.sh:
 This slurm file runs the featureCounts algorithm on bam files to produce a gene_counts text file for differential gene expression analysis.
 
