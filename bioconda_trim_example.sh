@@ -14,7 +14,7 @@ OUTPUT_R1_PAIRED=toy_data/trim_results/trim_paired_ctrl_rep1_forward.fastq.gz
 OUTPUT_R1_UNPAIRED=toy_data/trim_results/trim_unpaired_ctrl_rep1_forward.fastq.gz
 OUTPUT_R2_PAIRED=toy_data/trim_results/trim_paired_ctrl_rep1_reverse.fastq.gz
 OUTPUT_R2_UNPAIRED=toy_data/trim_results/trim_unpaired_ctrl_rep1_reverse.fastq.gz
-ADAPTERS=software/Trimmomatic-0.39/adapters/TruSeq3-PE.fa  # Path to your adapter sequences; this file comes from github download
+ADAPTERS=software/Trimmomatic-0.39/adapters/TruSeq3-PE.fa  # Path to your adapter sequences
 
 # Activate your conda environment
 # conda activate mouse_env
