@@ -2,7 +2,7 @@
 
 ## Workshop Materials
 ### rna-seq workshop.pdf and revised:
-This is the slide deck from the workshop
+This is the slide deck from the workshop. "revised" is the latest version.
 ### Workshop_Manual.pdf:
 Workshop_Manual_Chapter1.pdf, etc: This is a manual to performing RNA-Seq data analysis and augments the slide deck.
 
