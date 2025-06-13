@@ -1,4 +1,11 @@
 # RNA-Seq_workshop
+
+## Workshop Materials
+### rna-seq.pdf and revised:
+This is the slide deck from the workshop
+### Workshop_Manual.pdf:
+Workshop_Manual_Chapter1.pdf, etc: This is a manual to performing RNA-Seq data analysis and augments the slide deck.
+
 ## SLURM files
 ### mouse_star.sh: 
 This slurm file runs the STAR software on a single fastq file (Trimmomatic output) to align reads to a reference genome. Output is a bam file. Bai files need to be produced separately. The genome index (index_star) needs to be produced separately. The reference genome (genome.fa) and annotation file (annotation.gtf) need to be downloaded.
@@ -25,8 +32,3 @@ This R file produces a variety of plots helpful for performing functional analys
 ### mouse_rmats.R:
 This R file produces a variety of plots helpful for analyzing alternative splicing events.
 
-## Workshop Materials
-### rna-seq.pdf and revised:
-This is the slide deck from the workshop
-### Workshop_Manual.pdf:
-Workshop_Manual_Chapter1.pdf, etc: This is a manual to performing RNA-Seq data analysis and augments the slide deck.
