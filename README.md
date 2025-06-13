@@ -24,3 +24,9 @@ This R file produces a variety of plots helpful for analyzing differentially exp
 This R file produces a variety of plots helpful for performing functional analysis, using the clusterProfiler R package.
 ### mouse_rmats.R:
 This R file produces a variety of plots helpful for analyzing alternative splicing events.
+
+## Workshop Materials
+### rna-seq.pdf and revised:
+This is the slide deck from the workshop
+### Workshop_Manual.pdf:
+Workshop_Manual_Chapter1.pdf, etc: This is a manual to performing RNA-Seq data analysis and augments the slide deck.
