@@ -16,7 +16,7 @@ This slurm file runs the featureCounts software on bam files to produce a gene_c
 ### fastqc.sh:
 This slurm file processes all the available fastq.gz files and outputs an HTML file and a zipped folder containing all the images in the quality-control report (the HTML file).
 
-### Trimmomatic files:
+### Trimmomatic SLURM files:
 ### bioconda_trim.sh: 
 This slurm file describes a generic version of a slurm file for processing one paired-ended sample (two fastq files: read1 and read2). 
 ### bioconda_trim_example.sh: 
