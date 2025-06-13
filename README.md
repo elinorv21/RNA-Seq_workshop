@@ -13,6 +13,8 @@ This slurm file runs the STAR software on a single fastq file (Trimmomatic outpu
 This slurm file runs the rMATS software on bam files to produce text files representing a variety of alternative splicing events. The tmp file needs to be emptied for each run.
 ### mouse_fcounts.sh:
 This slurm file runs the featureCounts software on bam files to produce a gene_counts text file for differential gene expression analysis.
+### fastqc.sh:
+This slurm file processes all the available fastq.gz files and outputs an HTML file and a zipped folder containing all the images in the quality-control report (the HTML file).
 
 ### Trimmomatic files:
 ### bioconda_trim.sh: 
@@ -23,8 +25,6 @@ This slurm file is an example of a slurm file processing one paired-ended sample
 This slurm file describes a generic version of a slurm file for processing multiple paired-ended samples (each sample with two fastq files).
 ### trim_loop_example.sh: 
 This slurm file is an example of a slurm file processing multiple paired-ended samples (each sample with two fastq files: forward and reverse).
-### fastqc.sh:
-This slurm file processes all the available fastq.gz files and outputs an HTML file and a zipped folder containing all the images in the quality-control report (the HTML file).
 
 ## R files
 ### mouse_dge.R:
