@@ -23,6 +23,8 @@ This slurm file is an example of a slurm file processing one paired-ended sample
 This slurm file describes a generic version of a slurm file for processing multiple paired-ended samples (each sample with two fastq files).
 ### trim_loop_example.sh: 
 This slurm file is an example of a slurm file processing multiple paired-ended samples (each sample with two fastq files: forward and reverse).
+### fastqc.sh:
+This slurm file processes all the available fastq.gz files and outputs an HTML file and a zipped folder containing all the images in the quality-control report (the HTML file).
 
 ## R files
 ### mouse_dge.R:
