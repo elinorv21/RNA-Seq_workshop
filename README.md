@@ -3,8 +3,15 @@
 ## Workshop Materials
 ### rna-seq workshop.pdf and revised:
 This is the slide deck from the workshop. "revised" is the latest version.
-### Workshop_Manual.pdf:
-Workshop_Manual_Chapter1.pdf, etc: This is a manual to performing RNA-Seq data analysis and augments the slide deck.
+
+### Workshop Manual Table of Contents:
+Purpose: This is a manual for performing RNA-Seq data analysis and augments the slide deck.
+Chapter 1: Introduction to RNA-Seq Data Analysis: Savio, Galaxy, and Relevant Coding
+Chapter 2: Introduction to Data Cleaning: The fastQC, MultiQC, and Trimmomatic Tools
+Chapter 3. Introduction to Alignment and Quantification: The STAR and featureCounts Tools
+Chapter 4. Introduction to Differential Gene Expression Analysis: Exploratory Data Analysis (Visualization)
+Chapter 5. Introduction to Functional Analysis: Cluster Analysis: The clusterProfiler Tool
+Chapter 6. Introduction to Alternative Splicing Analysis: The rMATS, DEXSeq, and Sashimi Plot Tools
 
 ## SLURM files
 ### mouse_star.sh: 
