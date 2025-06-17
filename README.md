@@ -10,7 +10,7 @@ Purpose: This is a manual for performing RNA-Seq data analysis and augments the 
 #### Chapter 1: Introduction to RNA-Seq Data Analysis: Savio, Galaxy, and Relevant Coding
 #### Chapter 2: Introduction to Data Cleaning: The fastQC, MultiQC, and Trimmomatic Tools
 #### Chapter 3. Introduction to Alignment and Quantification: The STAR and featureCounts Tools
-#### Chapter 4. Introduction to Differential Gene Expression Analysis: Exploratory Data Analysis (Visualization)
+#### Chapter 4. Introduction to Differential Gene Expression Analysis: Exploratory Data Analysis (The DESeq2 and edgeR Tools and Visualization)
 #### Chapter 5. Introduction to Functional Analysis: Cluster Analysis: The clusterProfiler Tool
 #### Chapter 6. Introduction to Alternative Splicing Analysis: The rMATS, DEXSeq, and Sashimi Plot Tools
 
