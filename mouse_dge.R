@@ -22,7 +22,7 @@ library(ggplot2)
 library(pheatmap)
 
 # Load data
-gene_counts <- read.table("mouse_data/fcounts_results/gene_counts.txt", header = TRUE, sep = "\t", row.names = 1) 
+gene_counts <- read.table("~/Desktop/mouse_data/fcounts_results/gene_counts.txt", header = TRUE, sep = "\t", row.names = 1) 
 
 # Step 1. Clean up column names
 
