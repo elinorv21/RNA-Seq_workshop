@@ -49,9 +49,6 @@ colnames(df) <- newer_columns
 cat("Cleaned up column names and data: \n")
 head(df) # glance at dataset
 
-# Remove the version number (e.g., “.2” etc) from the Ensembl gene IDs in row names
-rownames(df) <- gsub("\\.\\d+$", "", rownames(df))
-
 # Step 2. Filter gene_counts data
 
 # Filter for mouse protein-coding genes only
