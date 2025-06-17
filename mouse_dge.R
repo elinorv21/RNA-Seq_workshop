@@ -165,13 +165,13 @@ cpm_dge <- cpm(dge) # Compute CPM (Counts Per Million)
 keep_cpm <- rowSums(cpm_dge >= 1) >= min_samples
 keep_fbe <- filterByExpr(dge, design = design_edger)
 
-# Case 1: Uses “|” for OR (less strict filtering) (Case 2 uses “&” for AND)
+# Option 1: Uses “|” for OR (less strict filtering) (Option 2 uses “&” for AND)
 # keep_combined_or <- keep_cpm | keep_fbe
 # dge <- dge[keep_combined_or, keep.lib.sizes = FALSE]
 # dge$samples$lib.size <- colSums(dge$counts) # recalculate library sizes
 # dge <- calcNormFactors(dge) # Normalization on dge
 
-# Case 3: Combines both by dropping low information rows:
+# Option 3: Combines both by dropping low information rows:
 keep_fbe <- filterByExpr(dge,
                          design   = design_edger,
                          min.count = 10,      # CPM of 1 in a 10 M-read library
