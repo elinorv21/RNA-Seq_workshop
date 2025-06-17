@@ -56,9 +56,9 @@ ensembl <- useMart(biomart = "ensembl") # connect to the Ensembl database using 
 ensembl <- useDataset("mmusculus_gene_ensembl", mart = ensembl)
 
 ensembl_gene_ids <- rownames(df) # Retrieve gene biotypes for your Ensembl IDs
-gene_info <- getBM(filters = "ensembl_gene_id", 
+gene_info <- getBM(filters = "ensembl_gene_id_version", 
                    values = ensembl_gene_ids, 
-                   attributes = c("ensembl_gene_id", "gene_biotype"), 
+                   attributes = c("ensembl_gene_id_version", "gene_biotype"), 
                    mart = ensembl) 
 
 # Filter for counts of protein-coding genes 
