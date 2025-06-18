@@ -694,7 +694,7 @@ volcano_plot_edger <- ggplot(edgeR_volcano_df, aes(x = logFC, y = -log10(FDR))) 
     y = "-Log10 (FDR)",
     color = "Significance"
   ) +
-  theme_minimal() +
+  theme_bw() +
   theme(plot.title = element_text(hjust = 0.5))
 
 # Save the plot
