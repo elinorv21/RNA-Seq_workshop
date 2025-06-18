@@ -938,6 +938,4 @@ ma_plot_production <- ggplot(deseq2_volcano_df, aes(x = log10(baseMean), y = log
     max.overlaps = Inf # Allows all labels to be shown, even if they would overlap slightly. Use with caution for very dense plots.
   )
 
-# Print the final MA plot
-print(ma_plot_production)
 ggsave("mouse_data/DESeq2_MA_Plot_pub.png", plot = ma_plot_production, width = 8, height = 6, dpi = 300)
