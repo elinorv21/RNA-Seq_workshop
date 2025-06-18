@@ -589,17 +589,46 @@ v <- voom(dge, design_edger, plot = FALSE) # edgeR objects
 mat_edger <- v$E[rownames(v$E) %in% common_sig_genes, ]
 mat_scaled_edger <- t(scale(t(mat_edger))) #  Center and scale
 
+anno_col_edger_modified <- dge$samples %>% dplyr::select(lib.size, condition)
+
 # This produces a heatmap with ensembl names for the genes
 pheatmap(mat_scaled_edger,
          cluster_rows = TRUE,
          cluster_cols = TRUE,
          show_rownames = TRUE,
          show_colnames = TRUE,
-         annotation_col = dge$samples, # Sample annotations
+         annotation_col = anno_col_edger_modified, # Sample annotations
          main = "Heatmap of Common Significant Genes (edgeR)",
          filename = "mouse_data/common_sig_genes_edger_heatmap_ensembl.png")
 
-# Heatmap for edgeR (using gene symbols or Ensembl IDs if symbol not found)
+# Heatmap for edgeR (using gene symbols (or Ensembl IDs if gene_symbol not found))
+
+# new code
+# start of new code
+current_heatmap_genes_edger <- rownames(mat_scaled_edger)
+
+# Remove version numbers from Ensembl IDs:
+current_heatmap_genes_unversioned_edger <- sub("\\.\\d+$", "", current_heatmap_genes_edger)
+
+gene_symbols_mapped_edger <- mapIds(org.Mm.eg.db,
+                             keys = current_heatmap_genes_unversioned_edger,
+                             keytype = "ENSEMBL",
+                             column = "SYMBOL")
+
+final_gene_names_edger <- ifelse(is.na(gene_symbols_mapped_edger),
+                                  # Fallback to original versioned Ensembl ID
+                                  current_heatmap_genes_edger,                                  			
+                                  gene_symbols_mapped_edger)
+
+# Ensure the names of this vector match the original versioned Ensembl IDs, 
+# which allows correct lookup when assigning to rownames:
+  
+names(final_gene_names_edger) <- current_heatmap_genes_edger
+
+rownames(mat_scaled_edger) <- final_gene_names_edger
+
+anno_col_edger_modified <- dge$samples %>% dplyr::select(lib.size, condition)
+# end of new code
 
 gene_symbols_edger <- mapIds(org.Mm.eg.db,
                              keys = common_sig_genes,
