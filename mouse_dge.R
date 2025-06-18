@@ -499,7 +499,7 @@ final_gene_names_deseq2 <- ifelse(is.na(gene_symbols_mapped_deseq2),
 # which allows correct lookup when assigning to rownames.
 names(final_gene_names_deseq2) <- current_heatmap_genes_deseq2
 
-# 5. Assign these as row names to the heatmap matrix
+# Assign these as row names to the heatmap matrix
 rownames(mat_scaled_deseq2) <- final_gene_names_deseq2
 
 pheatmap(mat_scaled_deseq2,
