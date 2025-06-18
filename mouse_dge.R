@@ -247,7 +247,7 @@ sum(!is.na(res$padj) & res$padj < 0.05)  # 248 significant
 table(is.na(res$padj)) # TRUE means low counts
 
 # Plot with custom point size and highlight order
-png("mouse_data/eda/DESeq2_MAplot.png", width = 1200, height = 1000, res = 150)
+png("mouse_data/DESeq2_MAplot.png", width = 1200, height = 1000, res = 150)
 DESeq2::plotMA(res, alpha = 0.05, ylim = c(-5, 5),
                main = "MA plot (DESeq2)", colSig = "red")
 legend("topright",
@@ -286,7 +286,7 @@ top_tags_lrt$AvgLogCPM <- rowMeans(logCPM_dge[rownames(top_tags_lrt), ]) # Model
 #  theme_bw() +
 #  geom_vline(xintercept = mean(res_edger$AvgLogCPM), linetype = "dotted", color = "blue") 
 #
-#ggsave("mouse_data/eda/ma_plot_edger.png", plot = ma_plot_edger, width = 8, height = 6, dpi = 300)
+#ggsave("mouse_data/ma_plot_edger.png", plot = ma_plot_edger, width = 8, height = 6, dpi = 300)
 
 # Create the MA plot for edgeR - Model 2
 ma_plot_edger_2 <- ggplot(top_tags_lrt, aes(x = AvgLogCPM, y = logFC)) +
@@ -297,7 +297,7 @@ ma_plot_edger_2 <- ggplot(top_tags_lrt, aes(x = AvgLogCPM, y = logFC)) +
   theme_bw() +
   geom_vline(xintercept = mean(top_tags_lrt$AvgLogCPM), linetype = "dotted", color = "blue") 
 
-ggsave("mouse_data/eda/edgeR_MAplot.png", plot = ma_plot_edger_2, width = 8, height = 6, dpi = 300)
+ggsave("mouse_data/edgeR_MAplot.png", plot = ma_plot_edger_2, width = 8, height = 6, dpi = 300)
 
 #################
 ### PCA Plots ###
@@ -333,7 +333,7 @@ pcaPlot_deseq2 <- ggplot(pcaDf_deseq2, aes(x = PC1, y = PC2, color = group)) +
   ggtitle("PCA Plot (DESeq2 - VST)") +
   theme_bw() +
   theme(plot.title = element_text(hjust = 0.5))
-ggsave("mouse_data/eda/DESeq2_PCA_2D_plot.png", plot = pcaPlot_deseq2, width = 8, height = 6, dpi = 300)
+ggsave("mouse_data/DESeq2_PCA_2D_plot.png", plot = pcaPlot_deseq2, width = 8, height = 6, dpi = 300)
 
 ##############################
 # 3-dim PCA plot for DESeq2 ## pcaData_deseq2
@@ -380,7 +380,7 @@ pcaPlot_3d_deseq2 <- plot_ly(
     title = "3D PCA Plot (DESeq2 - VST)"
   )
 
-saveWidget(pcaPlot_3d_deseq2, "mouse_data/eda/deseq2_PCA_3D.html")
+saveWidget(pcaPlot_3d_deseq2, "mouse_data/deseq2_PCA_3D.html")
 
 ######################
 # PCA plot for edgeR # dge
@@ -406,7 +406,7 @@ pcaPlot_edger <- ggplot(pcaDf_edger, aes(x = PC1, y = PC2, color = group)) +
   theme_bw() +
   theme(plot.title = element_text(hjust = 0.5))
 
-ggsave("mouse_data/eda/edgeR_PCA_2D_plot.png", plot = pcaPlot_edger, width = 8, height = 6, dpi = 300)
+ggsave("mouse_data/edgeR_PCA_2D_plot.png", plot = pcaPlot_edger, width = 8, height = 6, dpi = 300)
 
 #########################################
 # 3-dimensional plot for PCA with edgeR # pcaData_edger
@@ -450,7 +450,7 @@ pcaPlot_3d_edger <- plot_ly(
   )
 
 # Save the 3D plot
-saveWidget(pcaPlot_3d_edger, "mouse_data/eda/edgeR_PCA_3D.html")
+saveWidget(pcaPlot_3d_edger, "mouse_data/edgeR_PCA_3D.html")
 
 ###########################################
 # Heatmap for the common genes via DESeq2 # unpaired_design_filtered
@@ -469,7 +469,7 @@ pheatmap(mat_scaled_deseq2,
          show_colnames = TRUE,
          annotation_col = as.data.frame(colData(vsd)), # Sample annotations
          main = "Heatmap of Common Significant Genes (DESeq2 - VST)",
-         filename = "mouse_data/eda/common_sig_genes_deseq2_heatmap_ensembl.png") # Saves to a file
+         filename = "mouse_data/common_sig_genes_deseq2_heatmap_ensembl.png") # Saves to a file
 # This produces a heatmap with ensembl names for the genes
 
 # The following code produces a heatmap with geneSymbols instead:
@@ -511,7 +511,7 @@ pheatmap(mat_scaled_deseq2,
          main = "Heatmap of Common Significant Genes - DESeq2",
          fontsize_main = 2,
          margins = c(top = 10, right = 5, bottom = 5, left = 5),
-         filename = "common_sig_genes_deseq2_heatmap_symbols.png")
+         filename = "mouse_data/common_sig_genes_deseq2_heatmap_symbols.png")
 
 ###########################################
 # Publication-quality heatmap via DESeq2 ## mat_scaled_deseq2
@@ -570,12 +570,12 @@ p <- pheatmap(
 ## 2.  SAVE  (vector PDF + high-res PNG)
 ## ---------------------------------------------------------------
 ## vector-quality PDF 
-pdf("mouse_data/eda/pub_common_sig_genes_deseq2_heatmap_symbols.pdf", width = 7, height = 4.5)
+pdf("mouse_data/pub_common_sig_genes_deseq2_heatmap_symbols.pdf", width = 7, height = 4.5)
 print(p)
 dev.off()
 
 ## 300-dpi PNG for slides / email
-png("mouse_data/eda/pub_common_sig_genes_deseq2_heatmap_symbols.png",
+png("mouse_data/pub_common_sig_genes_deseq2_heatmap_symbols.png",
     width = 2100, height = 1350, res = 300)
 print(p)
 dev.off()
@@ -597,7 +597,7 @@ pheatmap(mat_scaled_edger,
          show_colnames = TRUE,
          annotation_col = dge$samples, # Sample annotations
          main = "Heatmap of Common Significant Genes (edgeR)",
-         filename = "mouse_data/eda/common_sig_genes_edger_heatmap_ensembl.png")
+         filename = "mouse_data/common_sig_genes_edger_heatmap_ensembl.png")
 
 # Heatmap for edgeR (using gene symbols or Ensembl IDs if symbol not found)
 
@@ -616,7 +616,7 @@ pheatmap(mat_scaled_edger,
          show_colnames = TRUE,
          annotation_col = dge$samples, # Sample annotations
          main = "Heatmap of Common Significant Genes (edgeR)",
-         filename = "mouse_data/eda/common_sig_genes_edger_heatmap_symbols.png")
+         filename = "mouse_data/common_sig_genes_edger_heatmap_symbols.png")
 
 ###########################
 # Volcano Plot for DESeq2 # deseq2_results_table_filtered
@@ -676,7 +676,7 @@ volcano_plot_edger <- ggplot(edgeR_volcano_df, aes(x = logFC, y = -log10(FDR))) 
   theme(plot.title = element_text(hjust = 0.5))
 
 # Save the plot
-ggsave("mouse_data/eda/edgeR_Volcano_Plot.png", plot = volcano_plot_edger, width = 8, height = 6, dpi = 300)
+ggsave("mouse_data/edgeR_Volcano_Plot.png", plot = volcano_plot_edger, width = 8, height = 6, dpi = 300)
 
 ##########################################
 # publication quality of volcano plot: ### deseq2_volcano_df
@@ -809,7 +809,7 @@ volcano_plot_production <- ggplot(deseq2_volcano_df, aes(x = log2FoldChange, y =
 
 # Print the plot
 print(volcano_plot_production)
-ggsave("mouse_data/eda/DESeq2_Volcano_Plot_pub.png", plot = volcano_plot_production, width = 8, height = 6, dpi = 300)
+ggsave("mouse_data/DESeq2_Volcano_Plot_pub.png", plot = volcano_plot_production, width = 8, height = 6, dpi = 300)
 
 ################################################
 ######## PUBLICATION-QUALITY MA PLOT ########### deseq2_volcano_df
@@ -918,4 +918,4 @@ ma_plot_production <- ggplot(deseq2_volcano_df, aes(x = log10(baseMean), y = log
 
 # Print the final MA plot
 print(ma_plot_production)
-ggsave("mouse_data/eda/DESeq2_MA_Plot_pub.png", plot = ma_plot_production, width = 8, height = 6, dpi = 300)
+ggsave("mouse_data/DESeq2_MA_Plot_pub.png", plot = ma_plot_production, width = 8, height = 6, dpi = 300)
