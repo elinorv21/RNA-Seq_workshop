@@ -603,8 +603,6 @@ pheatmap(mat_scaled_edger,
 
 # Heatmap for edgeR (using gene symbols (or Ensembl IDs if gene_symbol not found))
 
-# new code
-# start of new code
 current_heatmap_genes_edger <- rownames(mat_scaled_edger)
 
 # Remove version numbers from Ensembl IDs:
@@ -628,22 +626,14 @@ names(final_gene_names_edger) <- current_heatmap_genes_edger
 rownames(mat_scaled_edger) <- final_gene_names_edger
 
 anno_col_edger_modified <- dge$samples %>% dplyr::select(lib.size, condition)
-# end of new code
 
-gene_symbols_edger <- mapIds(org.Mm.eg.db,
-                             keys = common_sig_genes,
-                             keytype = "ENSEMBL",
-                             column = "SYMBOL")
-
-gene_symbols_edger_final <- ifelse(is.na(gene_symbols_edger), common_sig_genes, gene_symbols_edger)
-rownames(mat_scaled_edger) <- gene_symbols_edger_final
 
 pheatmap(mat_scaled_edger,
          cluster_rows = TRUE,
          cluster_cols = TRUE,
          show_rownames = TRUE,
          show_colnames = TRUE,
-         annotation_col = dge$samples, # Sample annotations
+         annotation_col = anno_col_edger_modified, # Sample annotations
          main = "Heatmap of Common Significant Genes (edgeR)",
          filename = "mouse_data/common_sig_genes_edger_heatmap_symbols.png")
 
