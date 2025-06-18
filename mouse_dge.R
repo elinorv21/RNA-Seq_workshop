@@ -831,8 +831,6 @@ volcano_plot_production <- ggplot(deseq2_volcano_df, aes(x = log2FoldChange, y =
     segment.color = 'grey50'
   )
 
-# Print the plot
-print(volcano_plot_production)
 ggsave("mouse_data/DESeq2_Volcano_Plot_pub.png", plot = volcano_plot_production, width = 8, height = 6, dpi = 300)
 
 ################################################
