@@ -528,7 +528,7 @@ mat_scaled <- mat_scaled_deseq2              # rows = genes, cols = samples
 anno_col <- as.data.frame(colData(vsd)) |>
   dplyr::select(sizeFactor, condition, sample)   # keep only needed
 
-## set colours for annotation bars
+## set colors for annotation bars
 library(RColorBrewer)
 anno_colours <- list(
   sizeFactor = colorRampPalette(c("#2166ac", "white", "#b2182b"))(100),
