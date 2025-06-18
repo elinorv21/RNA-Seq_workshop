@@ -584,6 +584,9 @@ dev.off()
 # Publication-quality heatmap via edgeR ## dge
 ##########################################
 
+library(org.Mm.eg.db)
+library(AnnotationDbi)
+
 #  Use voom-transformed and normalized logCPM values
 v <- voom(dge, design_edger, plot = FALSE) # edgeR objects
 mat_edger <- v$E[rownames(v$E) %in% common_sig_genes, ]
@@ -591,7 +594,8 @@ mat_scaled_edger <- t(scale(t(mat_edger))) #  Center and scale
 
 anno_col_edger_modified <- dge$samples %>% dplyr::select(lib.size, condition)
 
-# This produces a heatmap with ensembl names for the genes
+# This produces a heatmap with ensembl names for the genes:
+
 pheatmap(mat_scaled_edger,
          cluster_rows = TRUE,
          cluster_cols = TRUE,
@@ -601,7 +605,7 @@ pheatmap(mat_scaled_edger,
          main = "Heatmap of Common Significant Genes (edgeR)",
          filename = "mouse_data/common_sig_genes_edger_heatmap_ensembl.png")
 
-# Heatmap for edgeR (using gene symbols (or Ensembl IDs if gene_symbol not found))
+# Heatmap for edgeR (using gene symbols (or Ensembl IDs if gene_symbol not found)):
 
 current_heatmap_genes_edger <- rownames(mat_scaled_edger)
 
@@ -626,7 +630,6 @@ names(final_gene_names_edger) <- current_heatmap_genes_edger
 rownames(mat_scaled_edger) <- final_gene_names_edger
 
 anno_col_edger_modified <- dge$samples %>% dplyr::select(lib.size, condition)
-
 
 pheatmap(mat_scaled_edger,
          cluster_rows = TRUE,
