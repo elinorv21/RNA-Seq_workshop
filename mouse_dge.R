@@ -642,11 +642,11 @@ volcano_plot_deseq2 <- ggplot(deseq2_volcano_df, aes(x = log2FoldChange, y = -lo
     y = "-Log10 (Adjusted p-value)",
     color = "Significance"
   ) +
-  theme_minimal() +
+  theme_bw() +
   theme(plot.title = element_text(hjust = 0.5))
 
 # Save the plot
-ggsave("mouse_data/eda/DESeq2_Volcano_Plot.png", plot = volcano_plot_deseq2, width = 8, height = 6, dpi = 300)
+ggsave("mouse_data/DESeq2_Volcano_Plot.png", plot = volcano_plot_deseq2, width = 8, height = 6, dpi = 300)
 
 ##########################
 # Volcano Plot for edgeR # top_tags_lrt
