@@ -712,12 +712,14 @@ library(dplyr)
 
 # Getting gene names
 deseq2_volcano_df$ensembl_id <- rownames(deseq2_volcano_df)
+current_volcano_genes_unversioned_deseq2 <- sub("\\.\\d+$", "", deseq2_volcano_df$ensembl_id)
+
 deseq2_volcano_df$gene_symbol <- mapIds(
   x = org.Mm.eg.db,
-  keys = deseq2_volcano_df$ensembl_id,
+  keys = current_volcano_genes_unversioned_deseq2,
   column = "SYMBOL",
   keytype = "ENSEMBL",
-  multiVals = "first" # Or "filter", "list", etc., depending on how you want to handle one-to-many mappings
+  multiVals = "first" # Keep this for handling one-to-many mappings
 )
 deseq2_volcano_df <- deseq2_volcano_df %>%
   mutate(
