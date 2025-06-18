@@ -480,24 +480,10 @@ pheatmap(mat_scaled_deseq2,
 library(org.Mm.eg.db)
 library(AnnotationDbi)
 
-# old code
-gene_symbols_deseq2 <- mapIds(org.Mm.eg.db,
-                              keys = common_sig_genes,
-                              keytype = "ENSEMBL",
-                              column = "SYMBOL")
-
-# display the Ensembl ID if no symbol is found
-gene_symbols_deseq2_final <- ifelse(is.na(gene_symbols_deseq2), common_sig_genes, gene_symbols_deseq2)
-
-# Assign gene symbols as row names (handling potential NAs)
-rownames(mat_scaled_deseq2) <- gene_symbols_deseq2_final
-# old code ends
-# new code starts
 current_heatmap_genes_deseq2 <- rownames(mat_scaled_deseq2)
 
-# Corrected code for gene symbol mapping for DESeq2 heatmap
-current_heatmap_genes_unversioned_deseq2 <- sub("\\.\\d+$", "", current_heatmap_genes_deseq2)
 # Remove version numbers from Ensembl IDs
+current_heatmap_genes_unversioned_deseq2 <- sub("\\.\\d+$", "", current_heatmap_genes_deseq2)
 
 gene_symbols_mapped_deseq2 <- mapIds(org.Mm.eg.db,
                                      keys = current_heatmap_genes_unversioned_deseq2,
@@ -525,20 +511,7 @@ pheatmap(mat_scaled_deseq2,
          main = "Heatmap of Common Significant Genes - DESeq2",
          fontsize_main = 2,
          margins = c(top = 10, right = 5, bottom = 5, left = 5),
-         filename = "common_sig_genes_deseq2_heatmap_symbols_2.png")
-# new code ends
-
-# Heatmap for DESeq2 (using gene symbols or Ensembl IDs if symbol not found)
-# pheatmap(mat_scaled_deseq2,
-#          cluster_rows = TRUE,
-#          cluster_cols = TRUE,
-#          show_rownames = TRUE,
-#          show_colnames = TRUE,
-#          annotation_col = as.data.frame(colData(vsd)),
-#          main = "Heatmap of Common Significant Genes - DESeq2",
-#          fontsize_main = 2,
-#          margins = c(top = 10, right = 5, bottom = 5, left = 5),
-#          filename = "mouse_data/eda/common_sig_genes_deseq2_heatmap_symbols.png")
+         filename = "common_sig_genes_deseq2_heatmap_symbols.png")
 
 ###########################################
 # Publication-quality heatmap via DESeq2 ## mat_scaled_deseq2
