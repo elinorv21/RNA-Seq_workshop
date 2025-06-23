@@ -117,9 +117,11 @@ sig_genes_entrez_ids <- mapIds(
 
 is.null(sig_genes_entrez_ids)
 
+new_keys <- gsub("\\.\\d+$", "", rownames(deseq2_results_table_filtered))
+
 universe_entrez <- mapIds(
   org.Mm.eg.db,
-  keys      = rownames(deseq2_results_table_filtered),
+  keys      = new_keys,
   column    = "ENTREZID",
   keytype   = 'ENSEMBL',
   multiVals = "first"
@@ -299,10 +301,11 @@ sig_genes_deseq2_relaxed <- res_deseq2[res_deseq2$padj < 0.05 & abs(res_deseq2$l
 sig_genes_edger_relaxed <- res_edger[res_edger$FDR < 0.05 & abs(res_edger$logFC) >= 0.5, ]
 
 common_sig_genes_relaxed <- intersect(rownames(sig_genes_deseq2_relaxed), rownames(sig_genes_edger_relaxed)) # gene_list vector
+new_keys_entrez <- gsub("\\.\\d+$", "", common_sig_genes_relaxed)
 
 sig_genes_entrez_ids_relaxed <- mapIds(
   org.Mm.eg.db,
-  keys      = common_sig_genes_relaxed,
+  keys      = new_keys_entrez,
   column    = "ENTREZID",
   keytype   = 'ENSEMBL',
   multiVals = "first"
@@ -466,7 +469,7 @@ library(ggplot2)
 
 # Rank DESeq2 results:
 ranked_genes_deseq2 <- as.data.frame(deseq2_results_table_filtered) %>%
-  rownames_to_column(var = "gene_id") %>%
+  tibble::rownames_to_column(var = "gene_id") %>%
   dplyr::select(gene_id, log2FoldChange, padj) %>%
   na.omit() %>%
   # Create the GSEA ranking metric
@@ -477,9 +480,11 @@ ranked_genes_deseq2 <- as.data.frame(deseq2_results_table_filtered) %>%
 cat("Glimpse ranked genes DESeq2:")
 head(ranked_genes_deseq2)
 
+new_keys_ranked <- gsub("\\.\\d+$", "", names(ranked_genes_deseq2))
+
 # For GSEA with MSigDB GO gene sets, map Ensembl IDs to gene symbols:
 ranked_genes_symbol <- mapIds(org.Mm.eg.db,
-                              keys = names(ranked_genes_deseq2),
+                              keys = new_keys_ranked,
                               keytype = "ENSEMBL",
                               column = "SYMBOL")
 
