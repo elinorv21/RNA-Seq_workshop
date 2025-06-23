@@ -677,13 +677,7 @@ library(org.Mm.eg.db) # For mouse annotations, crucial for ID conversion
 library(dplyr) # For data manipulation (e.g., arrange, filter)
 library(tibble) # For rownames_to_column if your DESeq2 results have row names as gene IDs
 
-# --- 1. Prepare your input data: deseq2_results_table_filtered ---
-
-# If your gene IDs are in row names, convert them to a column
-# deseq2_results_table_filtered <- tibble::rownames_to_column(deseq2_results_table_filtered, var = "gene")
-
-
-# --- 2. Create the ranked gene list (geneList) for GSEA ---
+# --- 1. Create the ranked gene list (geneList) for GSEA ---
 # GSEA geneList format: numeric vector with names as Entrez IDs, sorted decreasingly by statistic.
 
 # Calculate the ranking score and create the initial ranked list with Ensembl IDs
@@ -741,7 +735,7 @@ head(geneList_for_reactome)
 str(geneList_for_reactome)
 length(geneList_for_reactome)
 
-# --- 3. Perform Reactome GSEA using gsePathway ---
+# --- 2. Perform Reactome GSEA using gsePathway ---
 # Note: gsePathway is part of the ReactomePA package, which you loaded earlier.
 
 gsea_results_reactome <- gsePathway(
@@ -753,7 +747,7 @@ gsea_results_reactome <- gsePathway(
   eps           = 0 # Set to 0 to avoid issues with very small values if needed
 )
 
-# --- 4. Check results and visualize ---
+# --- 3. Check results and visualize ---
 if (is.null(gsea_results_reactome) || nrow(gsea_results_reactome@result) == 0) {
   print("No significant Reactome pathways found by GSEA.")
 } else {
