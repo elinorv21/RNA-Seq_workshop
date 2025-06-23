@@ -579,38 +579,91 @@ ggsave("mouse_data/cluster/gsea/deseq2_gsea_go_emapplot.png", plot = gsea2_go, w
 library(AnnotationDbi)
 library(org.Mm.eg.db)
 
-## 1. ranked numeric vector from deseq2 (names = Ensembl IDs)
-deseq2_scores <- ranked_genes_deseq2                  
+# start new code
 
-## 2. Ensembl to Entrez (first hit only, suppress NA)
+# These two vectors are the results from the previous code:
+# ranked_genes_deseq2: Named numeric vector (names = VERSIONED Ensembl IDs, values = ranking_score)
+# new_keys_ranked: Character vector (UNVERSIONED Ensembl IDs derived from names(ranked_genes_deseq2))
+
+## 1. Create a ranked numeric vector with UNVERSIONED Ensembl IDs as names:
+deseq2_scores_unversioned <- ranked_genes_deseq2
+names(deseq2_scores_unversioned) <- new_keys_ranked
+
+cat("Glimpse deseq2_scores_unversioned (names are UNVERSIONED Ensembl IDs):\n")
+print(head(deseq2_scores_unversioned))
+
+## 2. Ensembl (UNVERSIONED) to Entrez mapping:
 entrez_ids <- mapIds(org.Mm.eg.db,
-                     keys     = names(deseq2_scores),
-                     keytype  = "ENSEMBL",
-                     column   = "ENTREZID",
-                     multiVals = "first")
+                     keys    = names(deseq2_scores_unversioned), # Use UNVERSIONED Ensembl IDs as keys
+                     keytype = "ENSEMBL",
+                     column  = "ENTREZID",
+                     multiVals = "first") # Take the first Entrez ID if multiples exist
 
-## 3. keep mapped genes and attach Entrez IDs as names
-geneList_for_kegg <- setNames(deseq2_scores[!is.na(entrez_ids)],
-                              entrez_ids[!is.na(entrez_ids)])
+cat("Glimpse entrez_ids (names are UNVERSIONED Ensembl IDs, values are Entrez IDs):\n")
+print(head(entrez_ids))
 
-## 4. collapse duplicates: keep the entry with the largest |score|
+## 3. Filter out unmapped genes and create geneList_for_kegg:
+# We need to filter both the scores AND the Entrez IDs based on successful mapping.
+# The `entrez_ids` vector has NAs for unmapped genes, and its names are already aligned
+# with `deseq2_scores_unversioned`.
+
+# Filter the unversioned scores to keep only those that successfully mapped to an Entrez ID:
+geneList_for_kegg_filtered_scores <- deseq2_scores_unversioned[!is.na(entrez_ids)]
+
+# Filter the Entrez IDs to keep only the mapped ones:
+mapped_entrez_ids <- entrez_ids[!is.na(entrez_ids)]
+
+# Now, create geneList_for_kegg by setting the names of the filtered scores
+# to the corresponding mapped Entrez IDs.
+# The order of names in `geneList_for_kegg_filtered_scores` and `mapped_entrez_ids`
+# is implicitly aligned because they both derived from the same filtering based on `entrez_ids`:
+geneList_for_kegg <- setNames(geneList_for_kegg_filtered_scores, mapped_entrez_ids)
+
+cat("Glimpse geneList_for_kegg (names are Entrez IDs, values are scores, before duplicate handling):\n")
+print(head(geneList_for_kegg))
+
+## 4. Collapse duplicates: keep the entry with the largest |score|:
 geneList_for_kegg <- tapply(geneList_for_kegg,
                             names(geneList_for_kegg),
                             function(z) z[which.max(abs(z))]) |>
-                            unlist()
+                      unlist()
 
-## 5. ensure numeric class and decreasing order
+cat("Glimpse geneList_for_kegg (after duplicate handling):\n")
+print(head(geneList_for_kegg))
+
+## 5. Ensure numeric class and decreasing order:
 geneList_for_kegg <- setNames(as.numeric(geneList_for_kegg), names(geneList_for_kegg))
 geneList_for_kegg <- sort(geneList_for_kegg, decreasing = TRUE)
 
+cat("Final geneList_for_kegg (sorted and ready for gseKEGG):\n")
+print(head(geneList_for_kegg))
+
+# --- Run gseKEGG ---
+library(clusterProfiler)
+library(DOSE)
+
+# You typically don't need a `gene_sets_for_gsea` for gseKEGG
+# unless you're providing a custom TERM2GENE.
+# gseKEGG fetches pathways automatically based on 'organism'.
+
 deseq2_gsea_results_kegg <- gseKEGG(geneList = geneList_for_kegg,
-                                    organism = 'mmu', # Use appropriate KEGG organism code
+                                    organism = 'mmu', # Mus musculus
                                     pvalueCutoff = 0.05,
                                     pAdjustMethod = "BH",
                                     minGSSize = 10,
                                     maxGSSize = 500,
                                     eps = 1e-10)
 
+# Check that your results are not NULL:                          
+cat("GSEA KEGG Results (partial view):\n")
+# Check if there are any results before trying to print
+if (length(deseq2_gsea_results_kegg@result$ID) > 0) {
+  print(head(deseq2_gsea_results_kegg@result))
+} else {
+  message("No KEGG terms enriched under the specified pvalueCutoff.")
+}
+
+# end new code
 
 deseq2_gsea_kegg <- dotplot(deseq2_gsea_results_kegg, showCategory = 5)
 deseq2_gsea_kegg <- deseq2_gsea_kegg + labs(x = "Normalized Enrichment Score (NES)", title = "GSEA of KEGG Pathways")
