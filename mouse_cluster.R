@@ -680,7 +680,7 @@ library(tibble) # For rownames_to_column if your DESeq2 results have row names a
 # --- 1. Prepare your input data: deseq2_results_table_filtered ---
 
 # If your gene IDs are in row names, convert them to a column
-# deseq2_results_table_filtered <- rownames_to_column(deseq2_results_table_filtered, var = "gene")
+# deseq2_results_table_filtered <- tibble::rownames_to_column(deseq2_results_table_filtered, var = "gene")
 
 
 # --- 2. Create the ranked gene list (geneList) for GSEA ---
