@@ -41,6 +41,7 @@ sig_genes <- inner_join(deseq2_common, edger_common, by = "gene") # dataframe
 
 # 2. Convert gene IDs to Entrez IDs:
 library(clusterProfiler)
+
 gene_list <- common_sig_genes
 # Remove the version number (e.g., “.2” etc) from the Ensembl gene IDs in row names
 gene_list <- gsub("\\.\\d+$", "", gene_list)
