@@ -491,46 +491,59 @@ ranked_genes_symbol <- mapIds(org.Mm.eg.db,
 # Remove unmapped IDs 
 ranked_genes_symbol <- ranked_genes_symbol[!is.na(ranked_genes_symbol)]
 
-# Create a ranked list with gene symbols, handling duplicates
-ranked_list_for_gsea_symbol <- ranked_genes_deseq2[names(ranked_genes_deseq2) %in% names(ranked_genes_symbol)]
-mapped_symbols <- sapply(ranked_genes_symbol[names(ranked_list_for_gsea_symbol)], '[', 1)
+# We need to create a temporary vector where the names are the UNVERSIONED Ensembl IDs
+#    to match with `ranked_genes_symbol`.
+ranked_scores_unversioned <- ranked_genes_deseq2
+names(ranked_scores_unversioned) <- new_keys_ranked # Now, names are UNVERSIONED Ensembl IDs
 
-# Last check: Filter out any NA symbols and then assign names
-valid_symbols_idx <- !is.na(mapped_symbols)
-ranked_list_for_gsea_symbol <- ranked_list_for_gsea_symbol[valid_symbols_idx]
-mapped_symbols <- mapped_symbols[valid_symbols_idx]
-names(ranked_list_for_gsea_symbol) <- mapped_symbols
+# Filter the unversioned ranked scores to keep only those that successfully mapped to a symbol.
+#    This comparison is now valid: unversioned IDs %in% unversioned IDs
+filtered_ranked_scores <- ranked_scores_unversioned[names(ranked_scores_unversioned) %in% names(ranked_genes_symbol)]
 
-# Remove duplicate symbols in the ranked list, keeping the one with the highest absolute score
-ranked_list_for_gsea_symbol_unique <- tapply(ranked_list_for_gsea_symbol, names(ranked_list_for_gsea_symbol), function(x) x[which.max(abs(x))])
+# Assign the actual gene symbols as names to the filtered scores.
+#    Here, we use the `ranked_genes_symbol` vector to look up symbols
+#    using the UNVERSIONED Ensembl IDs that are currently the names of `filtered_ranked_scores`.
+names(filtered_ranked_scores) <- ranked_genes_symbol[names(filtered_ranked_scores)]
 
-# Clean up names after tapply
-ranked_list_for_gsea_symbol_unique <- ranked_list_for_gsea_symbol_unique[!is.na(names(ranked_list_for_gsea_symbol_unique)) ]
+# Handle potential duplicate gene symbols that might arise if different Ensembl IDs
+#    (even unversioned ones) map to the same gene symbol. GSEA typically requires unique gene names.
+#    If duplicates exist, common practice is to keep the score of the gene with the highest absolute ranking score.
+ranked_list_for_gsea_symbol_unique <- data.frame(
+  symbol = names(filtered_ranked_scores),
+  score = filtered_ranked_scores
+) %>%
+  dplyr::group_by(symbol) %>%
+  dplyr::summarise(score = score[which.max(abs(score))]) %>% # Keep the score with max absolute value
+  dplyr::ungroup() %>%
+  tibble::deframe() # Convert back to a named vector
+
 names(ranked_list_for_gsea_symbol_unique) <- toupper(names(ranked_list_for_gsea_symbol_unique))
 
-# Convert to a named vector and sort in decreasing order, and remove any NAs
-###ranked_list_for_gsea_symbol_unique <- as.vector(ranked_list_for_gsea_symbol_unique)
-ranked_list_for_gsea_symbol_unique <-
-    setNames(as.numeric(ranked_list_for_gsea_symbol_unique),
-    names(ranked_list_for_gsea_symbol_unique))
-ranked_list_for_gsea_symbol_unique <- na.omit(ranked_list_for_gsea_symbol_unique) #remove any remaining NAs
+# Ensure the list is sorted by score (descending) as GSEA expects.
 ranked_list_for_gsea_symbol_unique <- sort(ranked_list_for_gsea_symbol_unique, decreasing = TRUE)
 
-# 3. Get gene sets for GSEA (using MSigDB as an example)
+# This `ranked_list_for_gsea_symbol` is your final input for GSEA.
+head(ranked_list_for_gsea_symbol_unique)
+
+# Examine your ranking_score distribution:
+# You can get the full filtered_ranked_scores and plot its histogram
+hist(filtered_ranked_scores, breaks=50, main="Distribution of Ranking Scores")
+# Also check unique values
+length(unique(filtered_ranked_scores)) / length(filtered_ranked_scores) * 100 # Percentage of unique scores
+# If this percentage is very low (e.g., under 50%), then the ties are severe.
+
+# Get gene sets for GSEA (using MSigDB as an example)
 # Get MSigDB GO gene sets (using symbols)
 
 gene_sets_for_gsea <- msigdbr(
   species     = "Mus musculus",
   collection  = "C5"#,          
   # subcategory = "GO:BP"        # optional – pick the GO branch
-  ) %>%
+) %>%
   dplyr::select(gs_name, gene_symbol) %>%
   dplyr::mutate(gene_symbol = toupper(as.character(gene_symbol)))
 
-# test for errors (overlap > 0 is correct; overlap = 0 is an error)
-overlap <- intersect(names(ranked_list_for_gsea_symbol_unique),
-                     gene_sets_for_gsea$gene_symbol)
-print(length(overlap)) # [1] 13007
+# new code end
 
 #######################################
 # GSEA using GO gene sets with DESeq2 #
