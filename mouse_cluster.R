@@ -109,7 +109,7 @@ library(ggplot2)
 # Convert gene IDs
 sig_genes_entrez_ids <- mapIds(
   org.Mm.eg.db,
-  keys      = common_sig_genes,
+  keys      = gene_list,
   column    = "ENTREZID",
   keytype   = 'ENSEMBL',
   multiVals = "first"
