@@ -579,8 +579,6 @@ ggsave("mouse_data/cluster/gsea/deseq2_gsea_go_emapplot.png", plot = gsea2_go, w
 library(AnnotationDbi)
 library(org.Mm.eg.db)
 
-# start new code
-
 # These two vectors are the results from the previous code:
 # ranked_genes_deseq2: Named numeric vector (names = VERSIONED Ensembl IDs, values = ranking_score)
 # new_keys_ranked: Character vector (UNVERSIONED Ensembl IDs derived from names(ranked_genes_deseq2))
@@ -662,8 +660,6 @@ if (length(deseq2_gsea_results_kegg@result$ID) > 0) {
 } else {
   message("No KEGG terms enriched under the specified pvalueCutoff.")
 }
-
-# end new code
 
 deseq2_gsea_kegg <- dotplot(deseq2_gsea_results_kegg, showCategory = 5)
 deseq2_gsea_kegg <- deseq2_gsea_kegg + labs(x = "Normalized Enrichment Score (NES)", title = "GSEA of KEGG Pathways")
