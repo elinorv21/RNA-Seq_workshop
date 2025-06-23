@@ -687,7 +687,6 @@ library(tibble) # For rownames_to_column if your DESeq2 results have row names a
 # GSEA geneList format: numeric vector with names as Entrez IDs, sorted decreasingly by statistic.
 
 # Calculate the ranking score and create the initial ranked list with Ensembl IDs
-# This replaces the two lines you asked to fix.
 ranked_genes_ensembl <- deseq2_results_table_filtered %>%
   # Explicitly convert to a data frame or tibble at the start of the chain
   as.data.frame() %>% # Add this line
