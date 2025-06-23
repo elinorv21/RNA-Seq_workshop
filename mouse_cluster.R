@@ -28,8 +28,8 @@ sig_genes_edger <- readRDS("~/Desktop/mouse_data/sig_genes_edger.rds") # signifi
 
 # 1. Choose the significant genes from DESeq2 and edgeR(from dge.R output) for our analysis:
 
-deseq2_df <- as.data.frame(sig_genes_deseq2) %>% rownames_to_column("gene")
-edger_df  <- as.data.frame(sig_genes_edger)  %>% rownames_to_column("gene")
+deseq2_df <- as.data.frame(sig_genes_deseq2) %>% tibble::rownames_to_column("gene")
+edger_df  <- as.data.frame(sig_genes_edger)  %>% tibble::rownames_to_column("gene")
 common_sig_genes <- intersect(deseq2_df$gene, edger_df$gene) # gene_list vector
 
 cat("number of significant genes common to both DESeq2 and edgeR")
@@ -42,6 +42,9 @@ sig_genes <- inner_join(deseq2_common, edger_common, by = "gene") # dataframe
 # 2. Convert gene IDs to Entrez IDs:
 library(clusterProfiler)
 gene_list <- common_sig_genes
+# Remove the version number (e.g., “.2” etc) from the Ensembl gene IDs in row names
+gene_list <- gsub("\\.\\d+$", "", gene_list)
+
 gene_entrez <- bitr(gene_list, fromType = "ENSEMBL", toType = "ENTREZID", OrgDb = org.Mm.eg.db) 
 
 # 3. Perform GO enrichment analysis:
