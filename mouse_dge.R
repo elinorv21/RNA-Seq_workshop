@@ -221,8 +221,8 @@ saveRDS(top_tags_lrt, "mouse_data/res_edger.rds") # results of edgeR
 # Step 5. Create a robust significant gene list using DESeq2 and edgeR gene lists
 library(tibble)   # rownames_to_column()
 
-deseq2_df <- as.data.frame(sig_genes_deseq2) %>% rownames_to_column("gene")
-edger_df  <- as.data.frame(sig_genes_edger)  %>% rownames_to_column("gene")
+deseq2_df <- as.data.frame(sig_genes_deseq2) %>% tibble::rownames_to_column("gene")
+edger_df  <- as.data.frame(sig_genes_edger)  %>% tibble::rownames_to_column("gene")
 common_sig_genes <- intersect(deseq2_df$gene, edger_df$gene)
 
 print("number of significant genes common to both DESeq2 and edgeR: ")
