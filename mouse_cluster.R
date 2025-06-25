@@ -815,7 +815,9 @@ head(ranked_genes_edger)
 #######################################
 # GSEA for GO gene sets with edgeR ##
 #######################################
-
+# Remove the version number (e.g., “.2” etc) from the Ensembl gene IDs in row names
+names(ranked_genes_edger) <- gsub("\\.\\d+$", "", names(ranked_genes_edger))
+                            
 # For GSEA with MSigDB GO gene sets, map Ensembl IDs to gene symbols:
 ranked_genes_symbol <- mapIds(org.Mm.eg.db,
                               keys = names(ranked_genes_edger),
