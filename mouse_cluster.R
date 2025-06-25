@@ -974,6 +974,9 @@ cat("First few values (after scoring):", head(ranked_genes_ensembl), "\n")
 # Remove any NAs from the ranking statistic
 ranked_genes_ensembl <- na.omit(ranked_genes_ensembl)
 
+# Remove the version number (e.g., “.2” etc) from the Ensembl gene IDs in row names
+names(ranked_genes_ensembl) <- gsub("\\.\\d+$", "", names(ranked_genes_ensembl))
+                            
 # Map Ensembl IDs to Entrez IDs
 # This uses the org.Mm.eg.db annotation package to perform the mapping
 entrez_map <- mapIds(org.Mm.eg.db,
