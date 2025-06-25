@@ -543,8 +543,6 @@ gene_sets_for_gsea <- msigdbr(
   dplyr::select(gs_name, gene_symbol) %>%
   dplyr::mutate(gene_symbol = toupper(as.character(gene_symbol)))
 
-# new code end
-
 #######################################
 # GSEA using GO gene sets with DESeq2 #
 #######################################
