@@ -37,6 +37,11 @@ This slurm file is an example of a slurm file processing multiple paired-ended s
 ## R files
 ### mouse_dge.R:
 This R file produces a variety of plots helpful for analyzing differentially expressed genes, using the DESeq2 and edgeR R packages.
+
+## Python files
+### sashimi.py:
+This file is an adaptation of ggsashimi.py. It produces sashimi plots (see Chapter 6 of the workshop manual).
+
 ### mouse_cluster.R:
 This R file produces a variety of plots helpful for performing functional analysis, using the clusterProfiler R package.
 ### mouse_rmats.R:
