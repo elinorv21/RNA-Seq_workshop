@@ -44,5 +44,5 @@ This R file produces a variety of plots helpful for analyzing alternative splici
 
 ## Python files
 ### sashimi.py:
-This file is an adaptation of ggsashimi.py. It produces sashimi plots (see Chapter 6 of the workshop manual).
+This Python file is an adaptation of ggsashimi.py. It produces sashimi plots (see Chapter 6 of the workshop manual).
 
