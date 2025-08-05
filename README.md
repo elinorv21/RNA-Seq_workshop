@@ -12,7 +12,7 @@ Purpose: This is a manual for performing RNA-Seq data analysis and augments the 
 #### Chapter 3. Introduction to Alignment and Quantification: The STAR and featureCounts Tools
 #### Chapter 4. Introduction to Differential Gene Expression Analysis: The DESeq2 and edgeR Tools, and Visualization
 #### Chapter 5. Introduction to Functional Analysis: The clusterProfiler Tool
-#### Chapter 6. Introduction to Alternative Splicing Analysis: The rMATS, DEXSeq, and Sashimi Plot Tools
+#### Chapter 6. (In progress) Introduction to Alternative Splicing Analysis: The rMATS, DEXSeq, and Sashimi Plot Tools
 
 ## SLURM files
 ### mouse_star.sh: 
